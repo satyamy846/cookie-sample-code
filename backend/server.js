@@ -18,7 +18,6 @@ app.post("/logout",(req, res)=>{
 app.post("/login", (req, res)=>{
 
     const key = "12345678";
-    res.setHeader('Set-Cookie', `table: ${key}`, { httpOnly: false, path:'/', });
     res.cookie('table', key, {httpOnly:false, maxAge: 60 * 60, sameSite: 'None', secure:true })
     res.send("success");
 })
