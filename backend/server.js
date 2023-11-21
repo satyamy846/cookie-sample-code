@@ -6,23 +6,31 @@ const cookieParser = require('cookie-parser')
 
 app.use(cookieParser());
 app.use(cors({
-    origin:"*"
+    origin:"http://localhost:5173",
+    credentials:true
 }))
 
 app.use(express.json());
 
-app.post("/logout",(req, res)=>{
-    res.clearCookie('table')
-    res.send('cleared')
-})
-app.post("/login", (req, res)=>{
-
+app.post("/logout", (req, res) => {
+    const cookieValue = req.cookies['table'];
+    console.log(cookieValue)
+    console.log(req.cookies)
+    res.json({
+        cookie: cookieValue,
+        message:"succcess"
+    })
+  });
+  
+  app.post("/login", (req, res) => {
+    const data = req.body.data;
+    console.log(data)
     const key = "12345678";
-    res.cookie('table', key, {httpOnly:false, maxAge: 60 * 60, sameSite: 'None', secure:true })
+    res.cookie('table', key, { httpOnly: false, maxAge: 60 * 60, sameSite: 'None' });
     res.send("success");
-})
+  });
+  
 
-
-app.listen(400, ()=>{
+app.listen(4000, ()=>{
     console.log("Server started")
 })

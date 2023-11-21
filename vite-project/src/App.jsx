@@ -4,12 +4,25 @@ import Cookies from 'js-cookie'
 
 function App() {
   async function login() {
-    const response = await axios.post("http://localhost:400/login");
-    console.log(response);
+    try{
+      const data = "My data"
+      const response = await axios.post("http://localhost:4000/login", data, {withCredentials: true});
+      console.log(response);
+    }
+    catch(err){
+      console.log("Error: " + err.message);
+    }
+    
   } 
   async function logout() {
-    const response = await axios.post("http://localhost:400/logout");
+    try{
+      const response = await axios.post("http://localhost:4000/logout",null,  {withCredentials: true});
     console.log(response);
+    }
+    catch(er){
+      console.log(er.message)
+    }
+    
   }
   function geetCookies(){
     console.log(Cookies.get('phone'))
